@@ -1,0 +1,15 @@
+name: Harcore
+version: '1.0-SNAPSHOT'
+main: cc.owow.harcore.Harcore
+api-version: '1.21'
+
+commands:
+  harcore:
+    description: Main command for Harcore
+    usage: /harcore <subcommand>
+    permission: harcore.operator
+
+permissions:
+  harcore.operator:
+    description: Permission for operators
+    default: op

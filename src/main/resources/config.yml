@@ -1,0 +1,6 @@
+language: en     # en / cn
+health-decrement: 2.0
+health-bottom: 2.0
+
+health-recover-food:
+  ENCHANTED_GOLDEN_APPLE: 1.0
