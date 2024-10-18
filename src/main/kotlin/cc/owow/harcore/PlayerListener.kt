@@ -4,12 +4,13 @@ import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent
 import org.bukkit.attribute.Attribute
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerItemConsumeEvent
 import kotlin.random.Random
 
 class PlayerListener(private val plugin: Harcore) : Listener {
     @EventHandler
-    fun onPlayerRespawn(event: PlayerPostRespawnEvent) {
+    fun onPlayerDeath(event: PlayerDeathEvent) {
         val player = event.player
         val maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)
 
@@ -17,21 +18,30 @@ class PlayerListener(private val plugin: Harcore) : Listener {
             plugin.getPluginConfig().respawnPenalty.lower,
             plugin.getPluginConfig().respawnPenalty.upper
         )
-
-        player.foodLevel = 10
-        player.saturation = 5.0f
-
         if ((maxHealth?.value?.minus(penalty) ?: 0.0) >= 1.0) {
             maxHealth?.baseValue = maxHealth?.value?.minus(penalty) ?: 1.0
-            player.health = maxHealth?.value?.div(2) ?: 1.0
             player.sendMessage("${plugin.getMessage("respawn")} §a-${penalty}❤")
         } else if ((maxHealth?.value ?: 0.0) > 1.0) {
             player.sendMessage("${plugin.getMessage("respawn")} §a-${maxHealth?.value?.minus(1)?.toInt()}❤")
             maxHealth?.baseValue = 1.0
-            player.health = 1.0
         } else {
             player.sendMessage("§c${plugin.getMessage("noob")}")
         }
+    }
+
+    @EventHandler
+    fun onPlayerRespawn(event: PlayerPostRespawnEvent) {
+        val player = event.player
+        val maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)
+
+        player.foodLevel = 10
+        player.saturation = 5.0f
+        if ((maxHealth?.value ?: 0.0) <= 1.0) {
+            player.health = 1.0
+        } else {
+            player.health = maxHealth?.value?.div(2) ?: 1.0
+        }
+
     }
 
     @EventHandler
