@@ -1,6 +1,8 @@
 language: en     # en / cn
-health-decrement: 2.0
-health-bottom: 2.0
+
+respawn-penalty:
+  health-decrement-boundary-upper: 10.0
+  health-decrement-boundary-lower: 2.0
 
 health-recover-food:
   ENCHANTED_GOLDEN_APPLE: 1.0
