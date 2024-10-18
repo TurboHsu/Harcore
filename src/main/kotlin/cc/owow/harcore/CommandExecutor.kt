@@ -15,6 +15,7 @@ class CommandExecutor(private val plugin: Harcore) : CommandExecutor {
             }
             when (args[0]) {
                 "reload" -> {
+                    plugin.reloadConfig()
                     plugin.loadConfig()
                     sender.sendMessage(plugin.getMessage("reload"))
                 }

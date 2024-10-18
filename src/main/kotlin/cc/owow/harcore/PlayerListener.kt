@@ -26,7 +26,7 @@ class PlayerListener(private val plugin: Harcore) : Listener {
             player.health = maxHealth?.value?.div(2) ?: 1.0
             player.sendMessage("${plugin.getMessage("respawn")} §a-${penalty}❤")
         } else if ((maxHealth?.value ?: 0.0) > 1.0) {
-            player.sendMessage("${plugin.getMessage("respawn")} §a-${maxHealth?.value?.minus(1)}❤")
+            player.sendMessage("${plugin.getMessage("respawn")} §a-${maxHealth?.value?.minus(1)?.toInt()}❤")
             maxHealth?.baseValue = 1.0
             player.health = 1.0
         } else {
